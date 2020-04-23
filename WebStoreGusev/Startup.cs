@@ -59,6 +59,7 @@ namespace WebStoreGusev
 
             // Singleton - будет жить все время жизни проекта
             services.AddSingleton<IEmployeesService, InMemoryEmployeeService>();
+            services.AddSingleton<ICarsService, InMemoryCarService>();
 
             // Scoped - время жизни Http запроса
             //services.AddScoped<IEmployeesService, InMemoryEmployeeService>();
@@ -67,7 +68,6 @@ namespace WebStoreGusev
             //services.AddTransient<IEmployeesService, InMemoryEmployeeService>();
 
             #endregion
-
 
         }
 

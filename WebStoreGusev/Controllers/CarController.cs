@@ -1,48 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebStoreGusev.Infrastructure.Interfaces;
 using WebStoreGusev.Models;
 
 namespace WebStoreGusev.Controllers
 {
+    [Route("Cars")]
     public class CarController : Controller
     {
-        private readonly List<CarViewModel> cars;
+        private readonly ICarsService _carsService;
 
-        public CarController()
+        public CarController(ICarsService carsService)
         {
-            cars = new List<CarViewModel>
-            {
-                new CarViewModel
-                {
-                    Id = 100010,
-                    Company = "Porshe",
-                    Model = "911 Carrera",
-                    Color = "Красный",
-                    Price = 10_000_000
-                },
-
-                new CarViewModel
-                {
-                    Id = 200010,
-                    Company = "BMW",
-                    Model = "Z4 Roadster",
-                    Color = "Синий",
-                    Price = 4_500_000
-                }
-            };
+            _carsService = carsService;
         }
 
+        [Route("All")]
         public IActionResult Index()
         {
-            return View(cars);
+            return View(_carsService.GetAll());
         }
 
+        [Route("{id}")]
         public IActionResult Buy(int id)
         {
-            return View(cars.FirstOrDefault(x => x.Id == id));
+            return View(_carsService.GetById(id));
         }
+
+        public IActionResult Delete(int id)
+        {
+            _carsService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Route("Edit/{Id?}")]
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            // add
+            if (!id.HasValue)
+                return View(new CarViewModel());
+
+            // edit
+            var model = _carsService.GetById(id.Value);
+
+            if (model == null)
+                return NotFound();
+
+            return View(model);
+        }
+
+        [Route("Edit/{Id?}")]
+        [HttpPost]
+        public IActionResult Edit(CarViewModel carModel)
+        {
+            // edit 
+            if (carModel.Id > 0)
+            {
+                var dbItem = _carsService.GetById(carModel.Id);
+
+                if (ReferenceEquals(dbItem, null))
+                    return NotFound();
+
+                dbItem.Company = carModel.Company;
+                dbItem.Model = carModel.Model;
+                dbItem.Color = carModel.Color;
+                dbItem.Price = carModel.Price;
+            }
+            else  // add
+            {
+                _carsService.AddNew(carModel);
+            }
+
+            // for Data Base
+            _carsService.Commit();
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

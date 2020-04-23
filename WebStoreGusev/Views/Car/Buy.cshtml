@@ -1,27 +1,28 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model WebStoreGusev.Models.CarViewModel
+﻿@model WebStoreGusev.Models.CarViewModel
 
-@{ ViewData["Title"] = "Buy"; }
+@{ ViewData["Title"] = "Купить"; }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <h1>Купить @Model.Company @Model.Model</h1>
+<table class="table table-bordered">
+    <tr>
+        <td>Производитель</td>
+        <td>@Model.Company</td>
+    </tr>
+    <tr>
+        <td>Модель</td>
+        <td>@Model.Model</td>
+    </tr>
+    <tr>
+        <td>Цвет</td>
+        <td>@Model.Color</td>
+    </tr>
+    <tr>
+        <td>Цена</td>
+        <td>@Model.Price RUB</td>
+    </tr>
+</table>
+<br />
 
-    <table>
-        <tr>
-            <td>@Model.Company</td>
-            <td>@Model.Model</td>
-            <td>@Model.Color</td>
-            <td>@Model.Price RUB</td>
-        </tr>
-    </table>
-    <br />
+<div>
     <a asp-action="Index">< Назад</a>
-</body>
-</html>
+</div>

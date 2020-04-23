@@ -101,14 +101,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                <a asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a asp-controller="Home" asp-action="Blog">Blog List</a></li>
                                     <li><a asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
                                 </ul>
                             </li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a asp-controller="Home" asp-action="ContactUs">Contact</a></li>
+                            <li><a a asp-controller="Home" asp-action="NotFound">404</a></li>
+                            <li><a a asp-controller="Home" asp-action="ContactUs">Contact</a></li>
+                            <li><a a asp-controller="Employee" asp-action="Index">Employees</a></li>
                         </ul>
                     </div>
                 </div>

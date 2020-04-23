@@ -13,6 +13,8 @@
     <link href="~/css/animate.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet">
     <link href="~/css/responsive.css" rel="stylesheet">
+    <!--Секция для отображения кастомных стилей, если понадобятся-->
+    @RenderSection("styles", false)
     <!--[if lt IE 9]>
     <script src="~/js/html5shiv.js"></script>
     <script src="~/js/respond.min.js"></script>
@@ -28,7 +30,9 @@
 
     @await Html.PartialAsync("_Header")
 
-    @RenderBody()
+    <div class="container">
+        @RenderBody()
+    </div>
 
     @await Html.PartialAsync("_Footer")
 
@@ -38,8 +42,7 @@
     <script src="~/js/price-range.js"></script>
     <script src="~/js/jquery.prettyPhoto.js"></script>
     <script src="~/js/main.js"></script>
-
+    <!--Секция для отображения кастомных скриптов, если понадобятся-->
     @RenderSection("scripts", false)
-
 </body>
 </html>

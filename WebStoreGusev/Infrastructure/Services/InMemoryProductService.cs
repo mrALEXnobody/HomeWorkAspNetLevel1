@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebStore.Domain;
-using WebStore.Domain.Entities;
+using WebStoreGusev.DomainNew;
+using WebStoreGusev.DomainNew.Entities;
 using WebStoreGusev.Infrastructure.Interfaces;
 
 namespace WebStoreGusev.Infrastructure.Services

@@ -1,4 +1,4 @@
-﻿using WebStore.Domain.Entities.Base.Interfaces;
+﻿using WebStoreGusev.DomainNew.Entities.Base.Interfaces;
 
 namespace WebStoreGusev.Models
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Domain;
+using WebStoreGusev.DomainNew;
 using WebStoreGusev.Infrastructure.Interfaces;
 using WebStoreGusev.Models;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using WebStore.Domain;
-using WebStore.Domain.Entities;
+using WebStoreGusev.DomainNew;
+using WebStoreGusev.DomainNew.Entities;
 
 namespace WebStoreGusev.Infrastructure.Interfaces
 {

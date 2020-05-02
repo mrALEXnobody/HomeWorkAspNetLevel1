@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStoreGusev.DAL;
 using WebStoreGusev.Infrastructure;
 using WebStoreGusev.Infrastructure.Interfaces;
 using WebStoreGusev.Infrastructure.Services;
@@ -51,6 +53,14 @@ namespace WebStoreGusev
 
             #endregion
 
+            #region Подключение БД
+
+            services.AddDbContext<WebStoreContext>(options => options
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            #endregion
+
+
             #region Подключаем разрешение зависимости
 
             // Добавляем разрешение зависимости
@@ -60,7 +70,9 @@ namespace WebStoreGusev
             // Singleton - будет жить все время жизни проекта
             services.AddSingleton<IEmployeesService, InMemoryEmployeeService>();
             services.AddSingleton<ICarsService, InMemoryCarService>();
-            services.AddSingleton<IProductService, InMemoryProductService>();
+            //services.AddSingleton<IProductService, InMemoryProductService>();
+            
+            services.AddScoped<IProductService, SqlProductService>();
 
             // Scoped - время жизни Http запроса
             //services.AddScoped<IEmployeesService, InMemoryEmployeeService>();

@@ -13,11 +13,16 @@ namespace WebStoreGusev.DomainNew.Entities
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public string Manufacturer { get; set; }
-
+        
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
+
+        /// <summary>
+        /// Размер. Поле для ДЗ.
+        /// </summary>
+        public int Size { get; set; }
     }
 }

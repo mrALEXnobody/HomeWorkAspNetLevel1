@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WebStoreGusev.DAL;
+using WebStoreGusev.DomainNew.Entities;
 using WebStoreGusev.Infrastructure;
 using WebStoreGusev.Infrastructure.Interfaces;
 using WebStoreGusev.Infrastructure.Services;
@@ -60,6 +63,44 @@ namespace WebStoreGusev
 
             #endregion
 
+            #region Подключение Identity
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<WebStoreContext>()
+                .AddDefaultTokenProviders();
+
+            // необязательно
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Настройки пароля
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+
+                // Настройки локаута
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // Настройки пользователя
+                options.User.RequireUniqueEmail = true;
+            });
+
+            // необязательно
+            // Настройки куков
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.Expiration = TimeSpan.FromDays(150);
+            //    options.LoginPath = "/Account/Login";
+            //    options.LogoutPath = "/Account/Logout";
+            //    options.AccessDeniedPath = "/Account/AccessDenied";
+            //    options.SlidingExpiration = true;
+            //});
+
+            #endregion
 
             #region Подключаем разрешение зависимости
 
@@ -94,6 +135,12 @@ namespace WebStoreGusev
 
             // Подключение статических ресурсов.
             app.UseStaticFiles();
+
+            // Подключение аутентификации
+            app.UseAuthentication();
+
+            // Подключение авторизации
+            app.UseAuthorization();
 
             // устанавливать кастомные обработчики
             app.Map("/index", CustomIndexHandler);

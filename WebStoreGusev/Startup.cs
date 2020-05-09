@@ -35,7 +35,6 @@ namespace WebStoreGusev
 
         #endregion
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             // Подключение MVC
@@ -90,15 +89,15 @@ namespace WebStoreGusev
 
             // необязательно
             // Настройки куков
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.HttpOnly = true;
-            //    options.Cookie.Expiration = TimeSpan.FromDays(150);
-            //    options.LoginPath = "/Account/Login";
-            //    options.LogoutPath = "/Account/Logout";
-            //    options.AccessDeniedPath = "/Account/AccessDenied";
-            //    options.SlidingExpiration = true;
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                //options.Cookie.HttpOnly = true;
+                //options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
 
             #endregion
 
@@ -114,6 +113,10 @@ namespace WebStoreGusev
             //services.AddSingleton<IProductService, InMemoryProductService>();
             
             services.AddScoped<IProductService, SqlProductService>();
+
+            // Настройки для корзины
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICartService, CookieCartService>();
 
             // Scoped - время жизни Http запроса
             //services.AddScoped<IEmployeesService, InMemoryEmployeeService>();

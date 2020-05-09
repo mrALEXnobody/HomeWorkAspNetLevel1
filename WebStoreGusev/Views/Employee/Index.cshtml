@@ -1,25 +1,34 @@
 ﻿@model IEnumerable<EmployeeViewModel>
 
-@{ 
+@{
     //Layout = null;
-    ViewData["Title"] = "Список сотрудников"; 
+    ViewData["Title"] = "Index";
+    var isAdmin = User.IsInRole("Admins");
 }
 
-@*<h1>Hello from my first view</h1>*@
-<hr />
-<a asp-action="Edit" class="btn btn-success">Добавить</a>
-<hr />
-<table class="table table-bordered">
+<h1>Hello from my first view</h1>
+@if (isAdmin)
+{
+    <a asp-action="Edit" class="btn btn-success">Добавить</a>
+}
+
+<table class="table">
     @foreach (var item in Model)
     {
         <tr>
-            <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
+            @if (isAdmin)
+            {
+                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
+            }
             <td>@item.SurName</td>
             <td>@item.FirstName</td>
             <td>@item.Patronymic</td>
-            <td>@item.Age</td>
-            <td><a asp-action="Details" asp-route-id="@item.Id">Детали</a></td>
-            <td><a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-cut"></i></a></td>
-    </tr>
+            <td>@Html.ActionLink("Детали", "Details", new { id = item.Id })</td>
+            @if (isAdmin)
+            {
+                <td><a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-cut"></i></a></td>
+            }
+        </tr>
     }
+
 </table>

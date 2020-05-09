@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebStoreGusev.Infrastructure.Interfaces;
 using WebStoreGusev.Models;
 
 namespace WebStoreGusev.Controllers
 {
     [Route("users")]
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeesService _employeesService;
@@ -15,6 +17,7 @@ namespace WebStoreGusev.Controllers
         }
 
         [Route("all")]
+        [AllowAnonymous]
         // GET: /users/all
         public IActionResult Index()
         {
@@ -23,6 +26,7 @@ namespace WebStoreGusev.Controllers
         }
 
         [Route("{id}")]
+        [Authorize(Roles = "Admins, Users")]
         // GET: /users/{id}
         public IActionResult Details(int id)
         {
@@ -31,6 +35,7 @@ namespace WebStoreGusev.Controllers
 
         [Route("edit/{id?}")]
         [HttpGet]
+        [Authorize(Roles = "Admins")]
         // GET: /users/edit/{id}
         public IActionResult Edit(int? id)
         {
@@ -46,6 +51,7 @@ namespace WebStoreGusev.Controllers
 
         [Route("edit/{id?}")]
         [HttpPost]
+        [Authorize(Roles = "Admins")]
         // GET: /users/edit/{id}
         public IActionResult Edit(EmployeeViewModel model)
         {
@@ -89,6 +95,7 @@ namespace WebStoreGusev.Controllers
         /// <param name="id">Id сотрудника.</param>
         /// <returns></returns>
         [Route("delete/{id}")]
+        [Authorize(Roles = "Admins")]
         public IActionResult Delete(int id)
         {
             _employeesService.Delete(id);

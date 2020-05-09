@@ -136,6 +136,8 @@ namespace WebStoreGusev
             // Подключение статических ресурсов.
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             // Подключение аутентификации
             app.UseAuthentication();
 
@@ -150,8 +152,6 @@ namespace WebStoreGusev
             // Можно прописать логику 
             // "останавливать выполнение запроса или продолжать".
             UseSample(app);
-
-            app.UseRouting();
 
             #region Настройка маршрутизации MVC
 

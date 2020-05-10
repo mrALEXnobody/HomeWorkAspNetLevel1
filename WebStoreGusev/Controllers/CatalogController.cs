@@ -38,9 +38,24 @@ namespace WebStoreGusev.Controllers
             return View(model);
         }
 
-        public IActionResult ProductDetails()
+        public IActionResult ProductDetails(int id)
         {
-            return View();
+            var product = _productService.GetProductById(id);
+
+            if (product == null)
+                return NotFound();
+
+            var model = new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                Order = product.Order,
+                Brand = product.Brand != null ? product.Brand.Name : string.Empty
+            };
+
+            return View(model);
         }
     }
 }

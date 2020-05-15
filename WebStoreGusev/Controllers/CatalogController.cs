@@ -30,7 +30,8 @@ namespace WebStoreGusev.Controllers
                     ImageUrl = p.ImageUrl,
                     Name = p.Name,
                     Order = p.Order,
-                    Price = p.Price
+                    Price = p.Price,
+                    Brand = p.Brand?.Name ?? string.Empty
                 }).OrderBy(p => p.Order)
                     .ToList()
             };
@@ -45,7 +46,7 @@ namespace WebStoreGusev.Controllers
             if (product == null)
                 return NotFound();
 
-            var model = new ProductViewModel()
+            return View(new ProductViewModel()
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -53,9 +54,7 @@ namespace WebStoreGusev.Controllers
                 ImageUrl = product.ImageUrl,
                 Order = product.Order,
                 Brand = product.Brand != null ? product.Brand.Name : string.Empty
-            };
-
-            return View(model);
+            });
         }
     }
 }

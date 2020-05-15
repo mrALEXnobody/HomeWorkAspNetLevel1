@@ -161,6 +161,11 @@ namespace WebStoreGusev
             // Настройка маршрутизации MVC
             app.UseEndpoints(endpoints =>
             {
+                // Подключение Area
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 // Подключение MVC 3.1
                 endpoints.MapControllerRoute(
                     name: "default",

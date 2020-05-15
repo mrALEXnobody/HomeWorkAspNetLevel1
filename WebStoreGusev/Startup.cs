@@ -113,6 +113,7 @@ namespace WebStoreGusev
             //services.AddSingleton<IProductService, InMemoryProductService>();
             
             services.AddScoped<IProductService, SqlProductService>();
+            services.AddScoped<IOrdersService, SqlOrdersService>();
 
             // Настройки для корзины
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
